@@ -1,0 +1,292 @@
+#!/bin/sh
+
+source $(which colours)
+
+curlang="${LANG:0:2}"
+
+case "$curlang" in
+fr)
+  welcome_to="Bienvenue sur"
+  ;;
+it)
+  welcome_to="Benvenuto su"
+  ;;
+pt)
+  welcome_to="$(negrito 'Bem-vindo ao' $(italico 'script')) $(fc_dark_code_piltover_14 'base64file')"
+  help_usage="Utilização: $(fc_dark_code_piltover_14 $(basename $0)) [OPCÇÃO... | -c | --convert] [FICHEIRO]"
+  option="$(negrito 'OPCÇÃO:')"
+  print_convert="Converter um ficheiro para $(fc_dark_code_piltover_14 base64) e copiar o seu resultado à área de transferência."
+  print_help="Mostrar esta ajuda."
+  print_licence="Mostrar a licença."
+  print_version="Mostrar a versão."
+  supported_formats="FORMATOS SUPORTADOS:"
+  title_docs="Documentos"
+  title_fonts="Tipos de letras"
+  title_texts="Ficheiros em texto simples"
+  title_images="Imagens"
+  view_licence="Licença"
+  view_version="Versão"
+  text_licence="O $(italico script) $(fc_dark_code_piltover_14 'base64file') é um $(italico 'software') livre sob a licença MIT."
+  text_filename="Nome do ficheiro:"
+  text_format="Extensão de ficheiro:"
+  unsupported_format_error="Extensão não suportada!"
+  text_copied="Copiado!"
+  invalid_arg_error="Argumento inválido!"
+  article="Baseado nos artigos da lista completa de tipo de média de $(italico internet) nos sítios de FreeFormatter, IANA e MDN Mozilla. Prima um dos números para visitar o artigo:"
+  ;;
+pt_BR)
+  welcome_to="$(negrito 'Bem-vindo ao' $(italico 'script')) $(fc_dark_code_piltover_14 'base64file')"
+  help_usage="Uso: $(fc_dark_code_piltover_14 $(basename $0)) [OPÇÃO... | -c | --convert] [ARQUIVO]"
+  option="$(negrito 'OPÇÃO:')"
+  print_convert="Converter um arquivo para $(fc_dark_code_piltover_14 base64) e copiar o resultado à área de transferência."
+  print_help="Mostrar esta ajuda."
+  print_licence="Mostrar licença."
+  print_version="Mostrar versão."
+  supported_formats="FORMATOS SUPORTADOS:"
+  title_docs="Documentos"
+  title_fonts="Fontes"
+  title_texts="Arquivos em texto simples"
+  title_images="Imagens"
+  view_licence="Licença"
+  view_version="Versão"
+  text_licence="O $(italico script) $(fc_dark_code_piltover_14 'base64file') é um $(italico 'software') livre sob a licença MIT."
+  text_filename="Nome do arquivo:"
+  text_format="Tipo do arquivo:"
+  unsupported_format_error="Tipo de arquivo não suportado!"
+  text_copied="Copiado!"
+  invalid_arg_error="Opção inválida!"
+  article="Baseado nos artigos da lista completa de tipo de mídia de $(italico internet) nos $(italico sites) de FreeFormatter, IANA e MDN Mozilla. Clique aqui num dos números para ver o artigo:"
+  ;;
+*) # assuming default English
+  welcome_to="$(negrito Welcome to) $(fc_dark_code_piltover_14 'base64file') $(negrito "script!")"
+  help_usage="Usage: $(fc_dark_code_piltover_14 $(basename $0)) [OPTION... | -c | --convert] [FILE]"
+  option="$(negrito 'OPTION:')"
+  print_convert="To convert a file to $(fc_dark_code_piltover_14 base64) and to copy the result to the clipboard."
+  print_help="Print this help."
+  print_licence="Print the licence."
+  print_version="Print the version."
+  supported_formats="SUPPORTED FORMATS:"
+  title_docs="Documents"
+  title_fonts="Fonts"
+  title_texts="Files in plain text"
+  title_images="Images"
+  view_licence="Licence"
+  view_version="Version"
+  text_licence="The $(fc_dark_code_piltover_14 'base64file') is a free software under the MIT licence."
+  text_filename="Filename:"
+  text_format="Format:"
+  unsupported_format_error="Unsupported file format!"
+  text_copied="Copied to clipboard!"
+  invalid_arg_error="Invalid option!"
+  article="Based on articles on the mimetypes list on FreeFormatter, IANA and MDN Mozilla sites. Click here in one of the numbers to see the article:"
+  ;;
+esac
+
+applications_extensions_list=("pdf" "xls" "xlsx")
+
+fonts_extensions=("otf" "ttf" "woff" "woff2")
+
+images_extensions_list=("gif" "icns" "ico" "jpg" "jpeg" "png" "svg" "tif" "tiff" "webp")
+
+text_extensions_list=("bib" "c" "cpp" "css" "haml" "html" "irbrc" "java" "js" "json" "latex" "markdown" "md" "mjs" "pdf" "plist" "py" "r" "scss" "sh" "tex" "ts" "txt" "yaml" "yml" "zsh")
+
+usage() {
+  echo -en "$welcome_to\n"
+  echo -en "$help_usage\n"
+  echo -en "$option\n"
+  echo -en "-c --convert  $print_convert\n"
+  echo "-h --help     $print_help"
+  echo "-l --licence  $print_licence"
+  echo "-v --version  $print_version"
+  echo -en "\n$(negrito $supported_formats)\n"
+
+  echo -en "$title_docs:\n  "
+  for i in "${applications_extensions_list[@]}"; do
+    echo -en "$(fc_dark_code_piltover_14 .$i), "
+  done
+
+  echo -en "\n$title_fonts:\n  "
+  for i in "${fonts_extensions[@]}"; do
+    echo -en "$(fc_dark_code_piltover_14 .$i), "
+  done
+
+  echo -en "\n$title_images:\n  "
+  for i in "${images_extensions_list[@]}"; do
+    echo -en "$(fc_dark_code_piltover_14 .$i), "
+  done
+
+  echo -en "\n$title_texts:\n  "
+  for i in "${text_extensions_list[@]}"; do
+    echo -en "$(fc_dark_code_piltover_14 .$i), "
+  done
+  echo -en "\n"
+}
+
+VALID_ARGS=$(getopt -o hlvc: --long help,licence,version,convert: --name "$basename" -- "$@")
+
+if [ $? -ne 0 ]; then
+  echo -en "$(negrito $(fc_itau_personnalite_00 $invalid_arg_error))\n"
+  usage
+fi
+
+eval set -- "$VALID_ARGS"
+unset VALID_ARGS
+
+while true; 
+do
+  case "$1" in
+  -h | --help)
+    usage
+    shift
+    ;;
+  -l | --licence)
+    echo -en "$(negrito $view_licence:)\n"
+    echo -en "$text_licence\n"
+    shift
+    ;;
+  -v | --version)
+    echo -en "$(negrito $view_version:) $(fc_dark_code_piltover_14 'base64file') 0.5\n"
+    shift
+    ;;
+  -c | --convert)
+    # Grab the image format
+    filename=$(basename "$2")
+    type="${filename##*.}"
+
+    # Check if the image format is supported
+    echo -en "$text_filename $(fc_dark_code_piltover_14 $filename)\n"
+    echo -en "$text_format $(fc_dark_code_piltover_14 $type)\n"
+    echo -en "\n$article\n"
+    echo -en "\e]8;;https://www.freeformatter.com/mime-types-list.html\a1 – FreeFormatter\e]8;;\a\n"
+    echo -en "\e]8;;https://www.iana.org/assignments/media-types/media-types.xhtml\a2 – IANA\e]8;;\a\n"
+    echo -en "\e]8;;https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types\a3 – MDN Mozilla\e]8;;\a\n\n"
+
+    case $type in
+    'bib' | 'haml' | 'r' | 'txt' | 'zsh')
+      content="text"
+      type="plain"
+      ;;
+    'c')
+      content="text"
+      type="x-c"
+      ;;
+    'cpp')
+      content="text"
+      type="x-c++"
+      ;;
+    'css' | 'csv' | 'html' | 'json' | 'plist' | 'yaml' | 'yml')
+      content="text"
+      ;;
+    'gif' | 'png' | 'webp')
+      content="image"
+      ;;
+    'ico')
+      content="image"
+      type="x-icon"
+      ;;
+    'icns')
+      content="image"
+      type="x-icns"
+      ;;
+    'irbrc')
+      content="text"
+      type="x-ruby"
+      ;;
+    'java')
+      content="text"
+      type="x-java-source"
+      ;;
+    'jpeg' | 'jpg')
+      content="image"
+      type="jpeg"
+      ;;
+    'js' | 'mjs')
+      content="text"
+      type="javascript"
+      ;;
+    'latex')
+      content="text"
+      type="x-latex"
+      ;;
+    'markdown' | 'md')
+      content="text"
+      type="markdown"
+      ;;
+    'otf' | 'ttf' | 'woff' | 'woff2')
+      content="font"
+      ;;
+    'pdf')
+      content="application"
+      ;;
+    'php')
+      content="text"
+      type="x-php"
+      ;;
+    'py')
+      content="text"
+      type="x-python"
+      ;;
+    'scss')
+      content="text"
+      type="x-scss"
+      ;;
+    'sh')
+      content="text"
+      type="x-sh"
+      ;;
+    'svg')
+      content="image"
+      type="svg+xml"
+      ;;
+    'tex')
+      content="text"
+      type="x-tex"
+      ;;
+    'tif' | 'tiff')
+      content="image"
+      type="tiff"
+      ;;
+    'ts')
+      content="text"
+      type="typescript"
+      ;;
+    'xls' | 'xlsx')
+      content="application"
+      type="vnd.ms-excel"
+      ;;
+    *)
+      echo -en "\n$(negrito $(fc_itau_personnalite_00 $unsupported_format_error))\n"
+      case "$curlang" in
+      pt)
+        echo -en "A extensão $(fc_dark_code_piltover_14 $type) $(fc_lgbt_red 'não') é suportada.\n\n"
+        ;;
+      pt_BR)
+        echo -en "O tipo de arquivo $(fc_dark_code_piltover_14 $type) $(fc_lgbt_red 'não') é suportado.\n\n"
+        ;;
+      *) # Falling back to English
+        echo -en "The $(fc_dark_code_piltover_14 $type) format is $(fc_lgbt_red 'not') supported.\n\n"
+        ;;
+      esac
+      usage
+      exit 1
+      ;;
+    esac
+
+    # Converting the file to base64
+    file="data:$content/$type;base64,$(base64 -w 0 "$2")"
+
+    # Copy the base64 to the clipboard
+    echo "$file" | xsel --clipboard
+    echo -en "$text_copied\n"
+    shift 2
+    ;;
+  --)
+    shift
+    break
+    ;;
+  *)
+    echo -en "$(negrito $(fc_itau_personnalite_00 $invalid_arg_error))\n"
+    shift
+    ;;
+  esac
+done

@@ -1,0 +1,491 @@
+#!/bin/sh
+
+## Restore
+## Restaurar
+nc='\033[0m'
+
+## Text foreground colour
+## Cor do texto
+frg='38;2'
+
+## Text background colour
+## Cor do fundo do texto
+bg='48;2'
+
+## Italic
+## Itálico
+i='3'
+
+## Bold
+## Negrito
+n='1'
+
+## Other
+## Outros
+m='m'
+
+# Cores
+# Colours
+
+## Derivado da página de regiões de Runeterra no site League of Legends
+## Derived from the Runeterra regions page on the League of Legends website
+## Pages: https://universe.leagueoflegends.com/pt_BR/
+## Piltover and Zaun: https://na.leagueoflegends.com/en/featured/piltover
+
+## Compatível com ambos os Bash e o ZSH
+## Compatible with both Bash and ZSH
+
+### Itaú Empresas
+# RGB                               Hex
+itau_empresas_00="214;208;204"      # #D6D0CC
+itau_empresas_01="137;131;127"      # #89837F
+itau_empresas_02="236;112;0"        # #EC7000
+itau_empresas_03="231;235;25"       # #e7eb19
+itau_empresas_04="0;55;103"         # #003767
+
+### Itaú  Íon
+# RGB                               Hex
+itau_ion_00='167;206;46'            # #a7ce2e
+itau_ion_01='195;206;196'           # #c3cec4
+itau_ion_02='164;180;166'           # #a4b4a6
+itau_ion_03='19;49;52'              # #133134
+itau_ion_04='33;101;108'            # #21656c
+itau_ion_05='104;118;120'           # #687678
+itau_ion_06='9;27;30'               # #091b1e
+itau_ion_07='160;43;255'            # #a02bff
+
+### Itaú  Iti
+# RGB                               Hex
+itau_iti_00='111;29;255'            # #6f1dff
+itau_iti_01='207;187;242'           # #cfbbf2
+itau_iti_02='230;0;115'             # #e60073
+itau_iti_03='250;207;225'           # #facfe1
+itau_iti_04='254;51;134'            # #fe3386
+
+### Itaú  Personnalité
+# RGB                               Hex
+itau_personnalite_00='119;61;56'    # #773d38
+itau_personnalite_01='163;93;84'    # #a35d54
+itau_personnalite_02='242;207;188'  # #f2cfbc
+itau_personnalite_03='255;230;213'  # #ffe6d5
+itau_personnalite_04='221;174;96'   # #ddae60
+itau_personnalite_05='144;109;32'   # #906d20
+itau_personnalite_06='16;84;106'    # #10546a
+itau_personnalite_07='10;49;71'     # #0a3147
+itau_personnalite_08='25;45;100'    # #192d64
+itau_personnalite_09='13;23;51'     # #0d1733
+
+### LGBQTIA+
+# RGB                               Hex
+lgbt_red='229;0;0'                  # #e50000
+lgbt_brown='97;54;13'               # #61360d
+lgbt_orange='255;141;0'             # #ff8d00
+lgbt_yellow='255;238;0'             # #ffee00
+lgbt_green='0;129;33'               # #008121
+lgbt_sky='111;213;231'              # #6fd5e7
+lgbt_blue='0;76;255'                # #004cff
+lgbt_purple='118;1;136'             # #760188
+lgbt_pink='255;176;200'             # #ffb0c8
+
+### Noxus
+# RGB                               Hex
+noxus_00='33;27;27'                 # #211b1b
+noxus_01='59;39;32'                 # #3b2720
+noxus_02='112;75;56'                # #704b38
+noxus_03='136;112;98'               # #887062
+noxus_04='86;65;44'                 # #56412c
+noxus_05='121;114;103'              # #797267
+noxus_06='197;188;169'              # #c5bca9
+noxus_07='208;186;124'              # #d0ba7c
+noxus_08='146;159;129'              # #929f81
+noxus_09='70;79;60'                 # #464f3c
+noxus_10='32;36;34'                 # #202422
+noxus_11='167;159;162'              # #a79fa2
+
+### Piltover
+# RGB                               Hex
+piltover_00='164;116;98'            # #a47462
+piltover_01='66;51;28'              # #42331c
+piltover_02='86;65;31'              # #56411f
+piltover_03='70;67;62'              # #46433e
+piltover_04='250;247;241'           # #faf7f1
+piltover_05='205;190;145'           # #cdbe91
+piltover_06='57;54;44'              # #39362c
+piltover_07='139;124;72'            # #8b7c48
+piltover_08='211;200;141'           # #d3c88d
+piltover_09='85;107;102'            # #556b66
+piltover_10='15;162;166'            # #0fa2a6
+piltover_11='31;41;42'              # #1f292a
+piltover_12='32;40;51'              # #202833
+
+### Shurima
+# RGB                               Hex
+shurima_00='117;97;90'              # #75615a
+shurima_01='64;44;34'               # #402c22
+shurima_02='167;117;84'             # #a77554
+shurima_03='221;203;175'            # #ddcbaf
+shurima_04='133;113;79'             # #85714f
+shurima_05='180;146;86'             # #b49256
+shurima_06='216;174;92'             # #d8ae5c
+shurima_07='237;221;151'            # #eddd97
+shurima_08='122;120;108'            # #7a786c
+shurima_09='139;169;143'            # #8ba98f
+shurima_10='207;225;235'            # #cfe1eb
+shurima_11='76;63;70'               # #4c3f46
+
+### Targon
+# RGB                    Hex
+targon_00='109;82;69'               # #6d5245
+targon_01='194;178;168'             # #c2b2a8
+targon_02='199;134;70'              # #c78646
+targon_03='138;121;96'              # #8a7960
+targon_04='68;78;69'                # #444e45
+targon_05='81;133;87'               # #518557
+targon_06='123;143;140'             # #7b8f8c
+targon_07='69;83;98'                # #455362
+targon_08='229;228;233'             # #e5e4e9
+targon_09='149;135;173'             # #9587ad
+targon_10='116;78;152'              # #744e98
+targon_11='42;30;51'                # #2a1e33
+
+### Zaun
+# RGB                               Hex
+zaun_00='158;155;80'                # #9e9b50
+zaun_01='110;118;95'                # #6e765f
+zaun_02='222;255;171'               # #deffab
+zaun_03='89;164;36'                 # #59a424
+
+italico()
+{
+  echo "\033[${i}${m}$@${nc}";
+}
+
+negrito()
+{
+  echo "\033[${n}${m}$@${nc}";
+}
+
+fc_itau_empresas_00(){ echo "\033[${frg};${itau_empresas_00}${m}$@${nc}"; }
+fc_itau_empresas_01(){ echo "\033[${frg};${itau_empresas_01}${m}$@${nc}"; }
+fc_itau_empresas_02(){ echo "\033[${frg};${itau_empresas_02}${m}$@${nc}"; }
+fc_itau_empresas_03(){ echo "\033[${frg};${itau_empresas_03}${m}$@${nc}"; }
+fc_itau_empresas_04(){ echo "\033[${frg};${itau_empresas_04}${m}$@${nc}"; }
+fc_itau_ion_00(){ echo "\033[${frg};${itau_ion_00}${m}$@${nc}"; }
+fc_itau_ion_01(){ echo "\033[${frg};${itau_ion_01}${m}$@${nc}"; }
+fc_itau_ion_02(){ echo "\033[${frg};${itau_ion_02}${m}$@${nc}"; }
+fc_itau_ion_03(){ echo "\033[${frg};${itau_ion_03}${m}$@${nc}"; }
+fc_itau_ion_04(){ echo "\033[${frg};${itau_ion_04}${m}$@${nc}"; }
+fc_itau_ion_05(){ echo "\033[${frg};${itau_ion_05}${m}$@${nc}"; }
+fc_itau_ion_06(){ echo "\033[${frg};${itau_ion_06}${m}$@${nc}"; }
+fc_itau_ion_07(){ echo "\033[${frg};${itau_ion_07}${m}$@${nc}"; }
+fc_itau_iti_00(){ echo "\033[${frg};${itau_iti_00}${m}$@${nc}"; }
+fc_itau_iti_01(){ echo "\033[${frg};${itau_iti_01}${m}$@${nc}"; }
+fc_itau_iti_02(){ echo "\033[${frg};${itau_iti_02}${m}$@${nc}"; }
+fc_itau_iti_03(){ echo "\033[${frg};${itau_iti_03}${m}$@${nc}"; }
+fc_itau_iti_04(){ echo "\033[${frg};${itau_iti_04}${m}$@${nc}"; }
+fc_itau_personnalite_00(){ echo "\033[${frg};${itau_personnalite_00}${m}$@${nc}"; }
+fc_itau_personnalite_01(){ echo "\033[${frg};${itau_personnalite_01}${m}$@${nc}"; }
+fc_itau_personnalite_02(){ echo "\033[${frg};${itau_personnalite_02}${m}$@${nc}"; }
+fc_itau_personnalite_03(){ echo "\033[${frg};${itau_personnalite_03}${m}$@${nc}"; }
+fc_itau_personnalite_04(){ echo "\033[${frg};${itau_personnalite_04}${m}$@${nc}"; }
+fc_itau_personnalite_05(){ echo "\033[${frg};${itau_personnalite_05}${m}$@${nc}"; }
+fc_itau_personnalite_06(){ echo "\033[${frg};${itau_personnalite_06}${m}$@${nc}"; }
+fc_itau_personnalite_07(){ echo "\033[${frg};${itau_personnalite_07}${m}$@${nc}"; }
+fc_itau_personnalite_08(){ echo "\033[${frg};${itau_personnalite_08}${m}$@${nc}"; }
+fc_itau_personnalite_09(){ echo "\033[${frg};${itau_personnalite_09}${m}$@${nc}"; }
+fc_lgbt_red(){ echo "\033[${frg};${lgbt_red}${m}$@${nc}"; }
+fc_lgbt_orange(){ echo "\033[${frg};${lgbt_orange}${m}$@${nc}"; }
+fc_lgbt_yellow(){ echo "\033[${frg};${lgbt_yellow}${m}$@${nc}"; }
+fc_lgbt_green(){ echo "\033[${frg};${lgbt_green}${m}$@${nc}"; }
+fc_lgbt_blue(){ echo "\033[${frg};${lgbt_blue}${m}$@${nc}"; }
+fc_lgbt_purple(){ echo "\033[${frg};${lgbt_purple}${m}$@${nc}"; }
+fc_lgbt_pink(){ echo "\033[${frg};${lgbt_pink}${m}$@${nc}"; }
+fc_lgbt_sky(){ echo "\033[${frg};${lgbt_sky}${m}$@${nc}"; }
+fc_lgbt_brown(){ echo "\033[${frg};${lgbt_brown}${m}$@${nc}"; }
+fc_noxus_00(){ echo "\033[${frg};${noxus_00}${m}$@${nc}"; }
+fc_noxus_01(){ echo "\033[${frg};${noxus_01}${m}$@${nc}"; }
+fc_noxus_02(){ echo "\033[${frg};${noxus_02}${m}$@${nc}"; }
+fc_noxus_03(){ echo "\033[${frg};${noxus_03}${m}$@${nc}"; }
+fc_noxus_04(){ echo "\033[${frg};${noxus_04}${m}$@${nc}"; }
+fc_noxus_05(){ echo "\033[${frg};${noxus_05}${m}$@${nc}"; }
+fc_noxus_06(){ echo "\033[${frg};${noxus_06}${m}$@${nc}"; }
+fc_noxus_07(){ echo "\033[${frg};${noxus_07}${m}$@${nc}"; }
+fc_noxus_08(){ echo "\033[${frg};${noxus_08}${m}$@${nc}"; }
+fc_noxus_09(){ echo "\033[${frg};${noxus_09}${m}$@${nc}"; }
+fc_noxus_10(){ echo "\033[${frg};${noxus_10}${m}$@${nc}"; }
+fc_noxus_11(){ echo "\033[${frg};${noxus_11}${m}$@${nc}"; }
+fc_piltover_00(){ echo "\033[${frg};${piltover_00}${m}$@${nc}"; }
+fc_piltover_01(){ echo "\033[${frg};${piltover_01}${m}$@${nc}"; }
+fc_piltover_02(){ echo "\033[${frg};${piltover_02}${m}$@${nc}"; }
+fc_piltover_03(){ echo "\033[${frg};${piltover_03}${m}$@${nc}"; }
+fc_piltover_04(){ echo "\033[${frg};${piltover_04}${m}$@${nc}"; }
+fc_piltover_05(){ echo "\033[${frg};${piltover_05}${m}$@${nc}"; }
+fc_piltover_06(){ echo "\033[${frg};${piltover_06}${m}$@${nc}"; }
+fc_piltover_07(){ echo "\033[${frg};${piltover_07}${m}$@${nc}"; }
+fc_piltover_08(){ echo "\033[${frg};${piltover_08}${m}$@${nc}"; }
+fc_piltover_09(){ echo "\033[${frg};${piltover_09}${m}$@${nc}"; }
+fc_piltover_10(){ echo "\033[${frg};${piltover_10}${m}$@${nc}"; }
+fc_piltover_11(){ echo "\033[${frg};${piltover_11}${m}$@${nc}"; }
+fc_piltover_12(){ echo "\033[${frg};${piltover_12}${m}$@${nc}"; }
+fc_shurima_00(){ echo "\033[${frg};${shurima_00}${m}$@${nc}"; }
+fc_shurima_01(){ echo "\033[${frg};${shurima_01}${m}$@${nc}"; }
+fc_shurima_02(){ echo "\033[${frg};${shurima_02}${m}$@${nc}"; }
+fc_shurima_03(){ echo "\033[${frg};${shurima_03}${m}$@${nc}"; }
+fc_shurima_04(){ echo "\033[${frg};${shurima_04}${m}$@${nc}"; }
+fc_shurima_05(){ echo "\033[${frg};${shurima_05}${m}$@${nc}"; }
+fc_shurima_06(){ echo "\033[${frg};${shurima_06}${m}$@${nc}"; }
+fc_shurima_07(){ echo "\033[${frg};${shurima_07}${m}$@${nc}"; }
+fc_shurima_08(){ echo "\033[${frg};${shurima_08}${m}$@${nc}"; }
+fc_shurima_09(){ echo "\033[${frg};${shurima_09}${m}$@${nc}"; }
+fc_shurima_10(){ echo "\033[${frg};${shurima_10}${m}$@${nc}"; }
+fc_shurima_11(){ echo "\033[${frg};${shurima_11}${m}$@${nc}"; }
+fc_targon_00(){ echo "\033[${frg};${targon_00}${m}$@${nc}"; }
+fc_targon_01(){ echo "\033[${frg};${targon_01}${m}$@${nc}"; }
+fc_targon_02(){ echo "\033[${frg};${targon_02}${m}$@${nc}"; }
+fc_targon_03(){ echo "\033[${frg};${targon_03}${m}$@${nc}"; }
+fc_targon_04(){ echo "\033[${frg};${targon_04}${m}$@${nc}"; }
+fc_targon_05(){ echo "\033[${frg};${targon_05}${m}$@${nc}"; }
+fc_targon_06(){ echo "\033[${frg};${targon_06}${m}$@${nc}"; }
+fc_targon_07(){ echo "\033[${frg};${targon_07}${m}$@${nc}"; }
+fc_targon_08(){ echo "\033[${frg};${targon_08}${m}$@${nc}"; }
+fc_targon_09(){ echo "\033[${frg};${targon_09}${m}$@${nc}"; }
+fc_targon_10(){ echo "\033[${frg};${targon_10}${m}$@${nc}"; }
+fc_targon_11(){ echo "\033[${frg};${targon_11}${m}$@${nc}"; }
+fc_zaun_00(){ echo "\033[${frg};${zaun_00}${m}$@${nc}"; }
+fc_zaun_01(){ echo "\033[${frg};${zaun_01}${m}$@${nc}"; }
+fc_zaun_02(){ echo "\033[${frg};${zaun_02}${m}$@${nc}"; }
+fc_zaun_03(){ echo "\033[${frg};${zaun_03}${m}$@${nc}"; }
+
+neo_itau_empresas_00(){ echo "\033[${frg};${itau_empresas_00}"; }
+neo_itau_empresas_01(){ echo "\033[${frg};${itau_empresas_01}"; }
+neo_itau_empresas_02(){ echo "\033[${frg};${itau_empresas_02}"; }
+neo_itau_empresas_03(){ echo "\033[${frg};${itau_empresas_03}"; }
+neo_itau_empresas_04(){ echo "\033[${frg};${itau_empresas_04}"; }
+neo_itau_ion_00(){ echo "\033[${frg};${itau_ion_00}"; }
+neo_itau_ion_01(){ echo "\033[${frg};${itau_ion_01}"; }
+neo_itau_ion_02(){ echo "\033[${frg};${itau_ion_02}"; }
+neo_itau_ion_03(){ echo "\033[${frg};${itau_ion_03}"; }
+neo_itau_ion_04(){ echo "\033[${frg};${itau_ion_04}"; }
+neo_itau_ion_05(){ echo "\033[${frg};${itau_ion_05}"; }
+neo_itau_ion_06(){ echo "\033[${frg};${itau_ion_06}"; }
+neo_itau_ion_07(){ echo "\033[${frg};${itau_ion_07}"; }
+neo_itau_iti_00(){ echo "\033[${frg};${itau_iti_00}"; }
+neo_itau_iti_01(){ echo "\033[${frg};${itau_iti_01}"; }
+neo_itau_iti_02(){ echo "\033[${frg};${itau_iti_02}"; }
+neo_itau_iti_03(){ echo "\033[${frg};${itau_iti_03}"; }
+neo_itau_iti_04(){ echo "\033[${frg};${itau_iti_04}"; }
+neo_itau_personnalite_00(){ echo "\033[${frg};${itau_personnalite_00}"; }
+neo_itau_personnalite_01(){ echo "\033[${frg};${itau_personnalite_01}"; }
+neo_itau_personnalite_02(){ echo "\033[${frg};${itau_personnalite_02}"; }
+neo_itau_personnalite_03(){ echo "\033[${frg};${itau_personnalite_03}"; }
+neo_itau_personnalite_04(){ echo "\033[${frg};${itau_personnalite_04}"; }
+neo_itau_personnalite_05(){ echo "\033[${frg};${itau_personnalite_05}"; }
+neo_itau_personnalite_06(){ echo "\033[${frg};${itau_personnalite_06}"; }
+neo_itau_personnalite_07(){ echo "\033[${frg};${itau_personnalite_07}"; }
+neo_itau_personnalite_08(){ echo "\033[${frg};${itau_personnalite_08}"; }
+neo_itau_personnalite_09(){ echo "\033[${frg};${itau_personnalite_09}"; }
+neo_lgbt_red(){ echo "\033[${frg};${lgbt_red}"; }
+neo_lgbt_orange(){ echo "\033[${frg};${lgbt_orange}"; }
+neo_lgbt_yellow(){ echo "\033[${frg};${lgbt_yellow}"; }
+neo_lgbt_green(){ echo "\033[${frg};${lgbt_green}"; }
+neo_lgbt_blue(){ echo "\033[${frg};${lgbt_blue}"; }
+neo_lgbt_purple(){ echo "\033[${frg};${lgbt_purple}"; }
+neo_lgbt_pink(){ echo "\033[${frg};${lgbt_pink}"; }
+neo_lgbt_sky(){ echo "\033[${frg};${lgbt_sky}"; }
+neo_lgbt_brown(){ echo "\033[${frg};${lgbt_brown}"; }
+neo_noxus_00(){ echo "\033[${frg};${noxus_00}"; }
+neo_noxus_01(){ echo "\033[${frg};${noxus_01}"; }
+neo_noxus_02(){ echo "\033[${frg};${noxus_02}"; }
+neo_noxus_03(){ echo "\033[${frg};${noxus_03}"; }
+neo_noxus_04(){ echo "\033[${frg};${noxus_04}"; }
+neo_noxus_05(){ echo "\033[${frg};${noxus_05}"; }
+neo_noxus_06(){ echo "\033[${frg};${noxus_06}"; }
+neo_noxus_07(){ echo "\033[${frg};${noxus_07}"; }
+neo_noxus_08(){ echo "\033[${frg};${noxus_08}"; }
+neo_noxus_09(){ echo "\033[${frg};${noxus_09}"; }
+neo_noxus_10(){ echo "\033[${frg};${noxus_10}"; }
+neo_noxus_11(){ echo "\033[${frg};${noxus_11}"; }
+neo_piltover_00(){ echo "\033[${frg};${piltover_00}"; }
+neo_piltover_01(){ echo "\033[${frg};${piltover_01}"; }
+neo_piltover_02(){ echo "\033[${frg};${piltover_02}"; }
+neo_piltover_03(){ echo "\033[${frg};${piltover_03}"; }
+neo_piltover_04(){ echo "\033[${frg};${piltover_04}"; }
+neo_piltover_05(){ echo "\033[${frg};${piltover_05}"; }
+neo_piltover_06(){ echo "\033[${frg};${piltover_06}"; }
+neo_piltover_07(){ echo "\033[${frg};${piltover_07}"; }
+neo_piltover_08(){ echo "\033[${frg};${piltover_08}"; }
+neo_piltover_09(){ echo "\033[${frg};${piltover_09}"; }
+neo_piltover_10(){ echo "\033[${frg};${piltover_10}"; }
+neo_piltover_11(){ echo "\033[${frg};${piltover_11}"; }
+neo_piltover_12(){ echo "\033[${frg};${piltover_12}"; }
+neo_shurima_00(){ echo "\033[${frg};${shurima_00}"; }
+neo_shurima_01(){ echo "\033[${frg};${shurima_01}"; }
+neo_shurima_02(){ echo "\033[${frg};${shurima_02}"; }
+neo_shurima_03(){ echo "\033[${frg};${shurima_03}"; }
+neo_shurima_04(){ echo "\033[${frg};${shurima_04}"; }
+neo_shurima_05(){ echo "\033[${frg};${shurima_05}"; }
+neo_shurima_06(){ echo "\033[${frg};${shurima_06}"; }
+neo_shurima_07(){ echo "\033[${frg};${shurima_07}"; }
+neo_shurima_08(){ echo "\033[${frg};${shurima_08}"; }
+neo_shurima_09(){ echo "\033[${frg};${shurima_09}"; }
+neo_shurima_10(){ echo "\033[${frg};${shurima_10}"; }
+neo_shurima_11(){ echo "\033[${frg};${shurima_11}"; }
+neo_targon_00(){ echo "\033[${frg};${targon_00}"; }
+neo_targon_01(){ echo "\033[${frg};${targon_01}"; }
+neo_targon_02(){ echo "\033[${frg};${targon_02}"; }
+neo_targon_03(){ echo "\033[${frg};${targon_03}"; }
+neo_targon_04(){ echo "\033[${frg};${targon_04}"; }
+neo_targon_05(){ echo "\033[${frg};${targon_05}"; }
+neo_targon_06(){ echo "\033[${frg};${targon_06}"; }
+neo_targon_07(){ echo "\033[${frg};${targon_07}"; }
+neo_targon_08(){ echo "\033[${frg};${targon_08}"; }
+neo_targon_09(){ echo "\033[${frg};${targon_09}"; }
+neo_targon_10(){ echo "\033[${frg};${targon_10}"; }
+neo_targon_11(){ echo "\033[${frg};${targon_11}"; }
+neo_zaun_00(){ echo "\033[${frg};${zaun_00}"; }
+neo_zaun_01(){ echo "\033[${frg};${zaun_01}"; }
+neo_zaun_02(){ echo "\033[${frg};${zaun_02}"; }
+neo_zaun_03(){ echo "\033[${frg};${zaun_03}"; }
+
+# Modo escuro
+# Dark mode
+
+# Para códgos internos
+# For code and samp
+fc_dark_code_itau_empresas_00(){ echo "\033[${bg};${itau_empresas_04};${frg};${itau_empresas_00}${m} $@ ${nc}"; }
+fc_dark_code_itau_empresas_01(){ echo "\033[${bg};${itau_empresas_04};${frg};${itau_empresas_03}${m} $@ ${nc}"; }
+
+fc_dark_code_itau_ion_00(){ echo "\033[${bg};${itau_ion_03};${frg};${itau_ion_00}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_01(){ echo "\033[${bg};${itau_ion_03};${frg};${itau_ion_01}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_02(){ echo "\033[${bg};${itau_ion_03};${frg};${itau_ion_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_03(){ echo "\033[${bg};${itau_ion_04};${frg};${itau_ion_00}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_04(){ echo "\033[${bg};${itau_ion_04};${frg};${itau_ion_01}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_05(){ echo "\033[${bg};${itau_ion_04};${frg};${itau_ion_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_06(){ echo "\033[${bg};${itau_ion_06};${frg};${itau_ion_00}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_07(){ echo "\033[${bg};${itau_ion_06};${frg};${itau_ion_01}${m} $@ ${nc}"; }
+fc_dark_code_itau_ion_08(){ echo "\033[${bg};${itau_ion_06};${frg};${itau_ion_02}${m} $@ ${nc}"; }
+
+fc_dark_code_itau_iti_00(){ echo "\033[${bg};${itau_iti_00};${frg};${itau_iti_01}${m} $@ ${nc}"; }
+fc_dark_code_itau_iti_01(){ echo "\033[${bg};${itau_iti_00};${frg};${itau_iti_03}${m} $@ ${nc}"; }
+fc_dark_code_itau_iti_02(){ echo "\033[${bg};${itau_iti_02};${frg};${itau_iti_01}${m} $@ ${nc}"; }
+fc_dark_code_itau_iti_03(){ echo "\033[${bg};${itau_iti_02};${frg};${itau_iti_03}${m} $@ ${nc}"; }
+fc_dark_code_itau_iti_04(){ echo "\033[${bg};${itau_iti_04};${frg};${itau_iti_01}${m} $@ ${nc}"; }
+fc_dark_code_itau_iti_05(){ echo "\033[${bg};${itau_iti_04};${frg};${itau_iti_03}${m} $@ ${nc}"; }
+
+fc_dark_code_itau_personnalite_00(){ echo "\033[${bg};${itau_personnalite_00};${frg};${itau_personnalite_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_01(){ echo "\033[${bg};${itau_personnalite_00};${frg};${itau_personnalite_03}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_02(){ echo "\033[${bg};${itau_personnalite_00};${frg};${itau_personnalite_04}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_03(){ echo "\033[${bg};${itau_personnalite_01};${frg};${itau_personnalite_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_04(){ echo "\033[${bg};${itau_personnalite_05};${frg};${itau_personnalite_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_05(){ echo "\033[${bg};${itau_personnalite_06};${frg};${itau_personnalite_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_06(){ echo "\033[${bg};${itau_personnalite_06};${frg};${itau_personnalite_03}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_07(){ echo "\033[${bg};${itau_personnalite_06};${frg};${itau_personnalite_04}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_08(){ echo "\033[${bg};${itau_personnalite_07};${frg};${itau_personnalite_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_09(){ echo "\033[${bg};${itau_personnalite_07};${frg};${itau_personnalite_03}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_10(){ echo "\033[${bg};${itau_personnalite_07};${frg};${itau_personnalite_04}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_11(){ echo "\033[${bg};${itau_personnalite_08};${frg};${itau_personnalite_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_12(){ echo "\033[${bg};${itau_personnalite_08};${frg};${itau_personnalite_03}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_13(){ echo "\033[${bg};${itau_personnalite_08};${frg};${itau_personnalite_04}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_14(){ echo "\033[${bg};${itau_personnalite_09};${frg};${itau_personnalite_02}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_15(){ echo "\033[${bg};${itau_personnalite_09};${frg};${itau_personnalite_03}${m} $@ ${nc}"; }
+fc_dark_code_itau_personnalite_16(){ echo "\033[${bg};${itau_personnalite_09};${frg};${itau_personnalite_04}${m} $@ ${nc}"; }
+
+fc_dark_code_noxus_00(){ echo "\033[${bg};${noxus_00};${frg};${noxus_02}${m} $@ ${nc}"; }
+fc_dark_code_noxus_01(){ echo "\033[${bg};${noxus_00};${frg};${noxus_03}${m} $@ ${nc}"; }
+fc_dark_code_noxus_02(){ echo "\033[${bg};${noxus_00};${frg};${noxus_05}${m} $@ ${nc}"; }
+fc_dark_code_noxus_03(){ echo "\033[${bg};${noxus_00};${frg};${noxus_06}${m} $@ ${nc}"; }
+fc_dark_code_noxus_04(){ echo "\033[${bg};${noxus_00};${frg};${noxus_07}${m} $@ ${nc}"; }
+fc_dark_code_noxus_05(){ echo "\033[${bg};${noxus_00};${frg};${noxus_08}${m} $@ ${nc}"; }
+fc_dark_code_noxus_06(){ echo "\033[${bg};${noxus_00};${frg};${noxus_11}${m} $@ ${nc}"; }
+fc_dark_code_noxus_07(){ echo "\033[${bg};${noxus_01};${frg};${noxus_02}${m} $@ ${nc}"; }
+fc_dark_code_noxus_08(){ echo "\033[${bg};${noxus_01};${frg};${noxus_03}${m} $@ ${nc}"; }
+fc_dark_code_noxus_09(){ echo "\033[${bg};${noxus_01};${frg};${noxus_05}${m} $@ ${nc}"; }
+fc_dark_code_noxus_10(){ echo "\033[${bg};${noxus_01};${frg};${noxus_06}${m} $@ ${nc}"; }
+fc_dark_code_noxus_11(){ echo "\033[${bg};${noxus_01};${frg};${noxus_07}${m} $@ ${nc}"; }
+fc_dark_code_noxus_12(){ echo "\033[${bg};${noxus_01};${frg};${noxus_08}${m} $@ ${nc}"; }
+fc_dark_code_noxus_13(){ echo "\033[${bg};${noxus_01};${frg};${noxus_11}${m} $@ ${nc}"; }
+fc_dark_code_noxus_14(){ echo "\033[${bg};${noxus_04};${frg};${noxus_07}${m} $@ ${nc}"; }
+fc_dark_code_noxus_15(){ echo "\033[${bg};${noxus_04};${frg};${noxus_08}${m} $@ ${nc}"; }
+fc_dark_code_noxus_16(){ echo "\033[${bg};${noxus_04};${frg};${noxus_11}${m} $@ ${nc}"; }
+fc_dark_code_noxus_17(){ echo "\033[${bg};${noxus_09};${frg};${noxus_06}${m} $@ ${nc}"; }
+fc_dark_code_noxus_18(){ echo "\033[${bg};${noxus_09};${frg};${noxus_07}${m} $@ ${nc}"; }
+fc_dark_code_noxus_19(){ echo "\033[${bg};${noxus_09};${frg};${noxus_08}${m} $@ ${nc}"; }
+fc_dark_code_noxus_20(){ echo "\033[${bg};${noxus_09};${frg};${noxus_11}${m} $@ ${nc}"; }
+fc_dark_code_noxus_21(){ echo "\033[${bg};${noxus_10};${frg};${noxus_02}${m} $@ ${nc}"; }
+fc_dark_code_noxus_22(){ echo "\033[${bg};${noxus_10};${frg};${noxus_03}${m} $@ ${nc}"; }
+fc_dark_code_noxus_23(){ echo "\033[${bg};${noxus_10};${frg};${noxus_05}${m} $@ ${nc}"; }
+fc_dark_code_noxus_24(){ echo "\033[${bg};${noxus_10};${frg};${noxus_06}${m} $@ ${nc}"; }
+fc_dark_code_noxus_25(){ echo "\033[${bg};${noxus_10};${frg};${noxus_07}${m} $@ ${nc}"; }
+fc_dark_code_noxus_26(){ echo "\033[${bg};${noxus_10};${frg};${noxus_08}${m} $@ ${nc}"; }
+fc_dark_code_noxus_27(){ echo "\033[${bg};${noxus_10};${frg};${noxus_11}${m} $@ ${nc}"; }
+
+fc_dark_code_piltover_00(){ echo "\033[${bg};${piltover_01};${frg};${piltover_00}${m} $@ ${nc}"; }
+fc_dark_code_piltover_01(){ echo "\033[${bg};${piltover_01};${frg};${piltover_04}${m} $@ ${nc}"; }
+fc_dark_code_piltover_02(){ echo "\033[${bg};${piltover_01};${frg};${piltover_05}${m} $@ ${nc}"; }
+fc_dark_code_piltover_03(){ echo "\033[${bg};${piltover_01};${frg};${piltover_08}${m} $@ ${nc}"; }
+fc_dark_code_piltover_04(){ echo "\033[${bg};${piltover_02};${frg};${piltover_00}${m} $@ ${nc}"; }
+fc_dark_code_piltover_05(){ echo "\033[${bg};${piltover_02};${frg};${piltover_04}${m} $@ ${nc}"; }
+fc_dark_code_piltover_06(){ echo "\033[${bg};${piltover_02};${frg};${piltover_05}${m} $@ ${nc}"; }
+fc_dark_code_piltover_07(){ echo "\033[${bg};${piltover_02};${frg};${piltover_08}${m} $@ ${nc}"; }
+fc_dark_code_piltover_08(){ echo "\033[${bg};${piltover_03};${frg};${piltover_00}${m} $@ ${nc}"; }
+fc_dark_code_piltover_09(){ echo "\033[${bg};${piltover_03};${frg};${piltover_04}${m} $@ ${nc}"; }
+fc_dark_code_piltover_10(){ echo "\033[${bg};${piltover_03};${frg};${piltover_05}${m} $@ ${nc}"; }
+fc_dark_code_piltover_11(){ echo "\033[${bg};${piltover_03};${frg};${piltover_08}${m} $@ ${nc}"; }
+fc_dark_code_piltover_12(){ echo "\033[${bg};${piltover_06};${frg};${piltover_00}${m} $@ ${nc}"; }
+fc_dark_code_piltover_13(){ echo "\033[${bg};${piltover_06};${frg};${piltover_04}${m} $@ ${nc}"; }
+fc_dark_code_piltover_14(){ echo "\033[${bg};${piltover_06};${frg};${piltover_05}${m} $@ ${nc}"; }
+fc_dark_code_piltover_15(){ echo "\033[${bg};${piltover_06};${frg};${piltover_08}${m} $@ ${nc}"; }
+fc_dark_code_piltover_16(){ echo "\033[${bg};${piltover_11};${frg};${piltover_00}${m} $@ ${nc}"; }
+fc_dark_code_piltover_17(){ echo "\033[${bg};${piltover_11};${frg};${piltover_04}${m} $@ ${nc}"; }
+fc_dark_code_piltover_18(){ echo "\033[${bg};${piltover_11};${frg};${piltover_05}${m} $@ ${nc}"; }
+fc_dark_code_piltover_19(){ echo "\033[${bg};${piltover_11};${frg};${piltover_08}${m} $@ ${nc}"; }
+
+fc_dark_code_shurima_00(){ echo "\033[${bg};${shurima_01};${frg};${shurima_00}${m} $@ ${nc}"; }
+fc_dark_code_shurima_01(){ echo "\033[${bg};${shurima_01};${frg};${shurima_02}${m} $@ ${nc}"; }
+fc_dark_code_shurima_02(){ echo "\033[${bg};${shurima_01};${frg};${shurima_03}${m} $@ ${nc}"; }
+fc_dark_code_shurima_03(){ echo "\033[${bg};${shurima_01};${frg};${shurima_06}${m} $@ ${nc}"; }
+fc_dark_code_shurima_04(){ echo "\033[${bg};${shurima_01};${frg};${shurima_07}${m} $@ ${nc}"; }
+fc_dark_code_shurima_05(){ echo "\033[${bg};${shurima_01};${frg};${shurima_09}${m} $@ ${nc}"; }
+fc_dark_code_shurima_06(){ echo "\033[${bg};${shurima_01};${frg};${shurima_10}${m} $@ ${nc}"; }
+fc_dark_code_shurima_07(){ echo "\033[${bg};${shurima_11};${frg};${shurima_00}${m} $@ ${nc}"; }
+fc_dark_code_shurima_08(){ echo "\033[${bg};${shurima_11};${frg};${shurima_03}${m} $@ ${nc}"; }
+fc_dark_code_shurima_09(){ echo "\033[${bg};${shurima_11};${frg};${shurima_06}${m} $@ ${nc}"; }
+fc_dark_code_shurima_10(){ echo "\033[${bg};${shurima_11};${frg};${shurima_07}${m} $@ ${nc}"; }
+fc_dark_code_shurima_11(){ echo "\033[${bg};${shurima_11};${frg};${shurima_09}${m} $@ ${nc}"; }
+fc_dark_code_shurima_12(){ echo "\033[${bg};${shurima_11};${frg};${shurima_10}${m} $@ ${nc}"; }
+
+fc_dark_code_targon_00(){ echo "\033[${bg};${targon_00};${frg};${targon_01}${m} $@ ${nc}"; }
+fc_dark_code_targon_01(){ echo "\033[${bg};${targon_00};${frg};${targon_02}${m} $@ ${nc}"; }
+fc_dark_code_targon_02(){ echo "\033[${bg};${targon_00};${frg};${targon_08}${m} $@ ${nc}"; }
+fc_dark_code_targon_03(){ echo "\033[${bg};${targon_00};${frg};${targon_09}${m} $@ ${nc}"; }
+fc_dark_code_targon_04(){ echo "\033[${bg};${targon_04};${frg};${targon_01}${m} $@ ${nc}"; }
+fc_dark_code_targon_05(){ echo "\033[${bg};${targon_04};${frg};${targon_02}${m} $@ ${nc}"; }
+fc_dark_code_targon_06(){ echo "\033[${bg};${targon_04};${frg};${targon_08}${m} $@ ${nc}"; }
+fc_dark_code_targon_07(){ echo "\033[${bg};${targon_04};${frg};${targon_09}${m} $@ ${nc}"; }
+fc_dark_code_targon_08(){ echo "\033[${bg};${targon_07};${frg};${targon_01}${m} $@ ${nc}"; }
+fc_dark_code_targon_09(){ echo "\033[${bg};${targon_07};${frg};${targon_02}${m} $@ ${nc}"; }
+fc_dark_code_targon_10(){ echo "\033[${bg};${targon_07};${frg};${targon_08}${m} $@ ${nc}"; }
+fc_dark_code_targon_11(){ echo "\033[${bg};${targon_07};${frg};${targon_09}${m} $@ ${nc}"; }
+fc_dark_code_targon_12(){ echo "\033[${bg};${targon_10};${frg};${targon_01}${m} $@ ${nc}"; }
+fc_dark_code_targon_13(){ echo "\033[${bg};${targon_10};${frg};${targon_02}${m} $@ ${nc}"; }
+fc_dark_code_targon_14(){ echo "\033[${bg};${targon_10};${frg};${targon_08}${m} $@ ${nc}"; }
+fc_dark_code_targon_15(){ echo "\033[${bg};${targon_10};${frg};${targon_09}${m} $@ ${nc}"; }
+fc_dark_code_targon_16(){ echo "\033[${bg};${targon_11};${frg};${targon_01}${m} $@ ${nc}"; }
+fc_dark_code_targon_17(){ echo "\033[${bg};${targon_11};${frg};${targon_02}${m} $@ ${nc}"; }
+fc_dark_code_targon_18(){ echo "\033[${bg};${targon_11};${frg};${targon_08}${m} $@ ${nc}"; }
+fc_dark_code_targon_19(){ echo "\033[${bg};${targon_11};${frg};${targon_09}${m} $@ ${nc}"; }
+
+fc_dark_code_zaun_01(){ echo "\033[${bg};${zaun_01};${frg};${zaun_02}${m} $@ ${nc}"; }
+
+# Exemplos
+# Examples
+
+# chameleon -c 1 -f "'{0:d};{1:d};{2:d}'              # rgb({0:d}, {1:d}, {2:d})  #{0:02x}{1:02x}{2:02x}"
+# chameleon -c 2 -f "cor='{0:d};{1:d};{2:d}'          # rgb({0:d}, {1:d}, {2:d})  #{0:02x}{1:02x}{2:02x}"
+# chameleon -c 4 -f "piltover_='{0:d};{1:d};{2:d}'    # #{0:02x}{1:02x}{2:02x}"
+
+# echo -en "$(italico 'Vivo em Piltover.') E tu?\n"
+# echo -en "$(fc_piltover_10 'Vivo em Piltover.') E tu?\n"
+# echo -en "$(fc_shurima_03 'Vivo na Cidade de Shurima.') Tudo bem?\n"
+# echo -en "$(italico $(fc_shurima_03 'Vivo na Cidade de Shurima.')) Tudo bem?\n"
+# echo -en "$(italico $(negrito $(fc_itau_empresas_03 'Shurima')))\n"
